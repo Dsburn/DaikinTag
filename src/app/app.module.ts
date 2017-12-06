@@ -14,7 +14,7 @@ import { WelcomePageComponent } from './pages/welcome-page/welcome-page.componen
   declarations: [
     AppComponent,
     MasterPageComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
   ],
   imports: [
     BrowserModule,
