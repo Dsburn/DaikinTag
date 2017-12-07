@@ -1,36 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface User {
-  name: string; // required with minimum 5 characters
-  address: {
-      street?: string; // required
-      postcode?: string;
-  }
-}
+import { DaikinTag } from '../../model/daikin-tag';
+import { Observable } from 'rxjs/Observable';
+import { FirebaseSvcService } from '../../services/firebase-svc.service';
 
 @Component({
   selector: 'app-qrscan-page',
   templateUrl: './qrscan-page.component.html',
   styleUrls: ['./qrscan-page.component.css']
 })
-export class QrscanPageComponent implements OnInit {
+export class QrscanPageComponent {
 
-  constructor() { }
+  docTag: Observable<DaikinTag[]>;
+  content: string;
 
-  public user: User;
+  constructor(private fbService: FirebaseSvcService) { }
 
-  ngOnInit() {
-    this.user = {
-      name: '',
-        address: {
-         street: '',
-         postcode: '8000'
-      }
-    };
-  }
-
-  save(model: User, isValid: boolean) {
-    console.log(model, isValid);
+  save(form) {
+    this.docTag = this.fbService.getSnapshot(form.searchDOc);
   }
 
 }

@@ -8,6 +8,8 @@ import { MasterPageComponent } from './master-page/master-page.component';
 import { RouterModule } from '@angular/router';
 import { ApplicationRoutes } from './routing';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from 'angularfire2';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { WelcomePageComponent } from './pages/welcome-page/welcome-page.componen
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot(ApplicationRoutes)
+    RouterModule.forRoot(ApplicationRoutes),
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
