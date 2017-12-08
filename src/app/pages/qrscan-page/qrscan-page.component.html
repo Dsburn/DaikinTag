@@ -25,10 +25,13 @@
         <pre>form value: <br>{{f.value | json}}</pre>
     </div> -->
     <div>
-        <tree-root [nodes]="docTag | async"></tree-root>
-        <!-- <ul class="list-group" *ngFor="let tag of docTag | async">
+        <!-- <tree-root [nodes]="docTag | async"></tree-root> -->
+        <ul class="list-group" *ngFor="let tag of docTag | async">
             <li class="list-group-item">{{tag | json}}</li>
-        </ul> -->
+        </ul>
+
+        <button class="btn btn-success" (click)="GenerateCSV()">Generate</button>
+        <button class="btn btn-success" (click)="Onclick()">Generate</button>
     </div>
 
 
