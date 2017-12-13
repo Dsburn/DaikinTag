@@ -17,7 +17,7 @@ export class FirebaseSvcService {
   }
   getSnapshot(id: string): Observable<DaikinTag[]> {
     this.dbCollection = this.afs.collection(id);
-    console.log('${id}');
+    console.log(id);
     // ['added', 'modified', 'removed']
     return this.dbCollection.snapshotChanges().map((actions) => {
       return actions.map((a) => {

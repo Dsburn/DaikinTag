@@ -29,8 +29,9 @@
         <ul class="list-group" *ngFor="let tag of docTag | async">
             <li class="list-group-item">{{tag | json}}</li>
         </ul>
+        <button *ngIf="docTag | async" class="btn btn-success" (click)="GenerateCSV()">Download</button>
 
-        <button class="btn btn-success" (click)="GenerateCSV()">Generate</button>
+        <!-- <button *ngIf="docTag | async" class="btn btn-success" (click)="GenerateCSV()">Download</button> -->
         <!-- <button class="btn btn-success" (click)="Onclick()">Generate</button> -->
     </div>
 
