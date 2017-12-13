@@ -50,6 +50,7 @@ export class QrscanPageComponent {
     const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     // let row = '';
+    let column = '';
 
     // create Header
     // console.log(objArray);
@@ -63,12 +64,25 @@ export class QrscanPageComponent {
     // // append Label row with line break
     // str += row + '\r\n';
 
+    // print column
+     // tslint:disable-next-line:forin
+     for (const index in array[0]) {
+        // Now convert each value to string and comma-separated
+        console.log(array[0][index].name);
+        column +=  `${array[0][index].name}` + ',';
+    }
+    // console.log(column);
+    str += column + '\r\n';
+
     for (let i = 0; i < array.length; i++) {
         let line = '';
         // tslint:disable-next-line:forin
         for (const index in array[i]) {
             // tslint:disable-next-line:curly
-            if (line !== '') line += ',';
+            // console.log(array[i]);
+            if (line !== '') {
+              line += ',';
+              }
             line += array[i][index];
         }
         str += line + '\r\n';
