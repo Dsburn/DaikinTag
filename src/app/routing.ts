@@ -1,8 +1,8 @@
-import { MasterPageComponent } from "./master-page/master-page.component";
-import { WelcomePageComponent } from "./pages/welcome-page/welcome-page.component";
-import { CustomerPagesComponent } from "./pages/customer-pages/customer-pages.component";
-import { SupplierPageComponent } from "./pages/supplier-page/supplier-page.component";
-import { QrscanPageComponent } from "./pages/qrscan-page/qrscan-page.component";
+import { MasterPageComponent } from './master-page/master-page.component';
+import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
+import { CustomerPagesComponent } from './pages/customer-pages/customer-pages.component';
+import { SupplierPageComponent } from './pages/supplier-page/supplier-page.component';
+import { QrscanPageComponent } from './pages/qrscan-page/qrscan-page.component';
 
 export const ApplicationRoutes = [
   {

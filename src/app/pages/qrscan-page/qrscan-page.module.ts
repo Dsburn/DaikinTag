@@ -7,15 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseSvcService } from '../../services/firebase-svc.service';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-import { TreeModule } from 'angular-tree-component';
-
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(QRScanRoutes),
     FormsModule,
-    AngularFirestoreModule.enablePersistence(),
-    TreeModule
+    AngularFirestoreModule
 
   ],
   declarations: [QrscanPageComponent],
