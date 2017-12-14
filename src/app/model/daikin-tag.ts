@@ -1,8 +1,12 @@
 export interface DaikinTag {
 
   id?: string;
-  name: string;
-  title: string;
-  description: string;
-  date: Date;
+  partNum: string;
+  workOrderNum: string;
+  weight: string;
+  customer: string;
+  coilNum: string;
+  manufacturer: string;
+  width: string;
+  dateCapture: Date;
 }

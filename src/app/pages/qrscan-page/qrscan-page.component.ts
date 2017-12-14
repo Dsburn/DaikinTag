@@ -21,12 +21,17 @@ export class QrscanPageComponent {
 
   save(form) {
     this.docTag = this.fbService.getSnapshot(form.searchDOc);
-    this.docTag.subscribe((data) => {
-       data.map(val => {this.Tag.push({id: val.id,
-                                        name: val.name,
-                                        title: val.title,
-                                        description: val.description,
-                                        date: val.date
+    this.docTag.subscribe((val) => {
+       val.map(data => {this.Tag.push({
+                                        id: data.id,
+                                        partNum: data.partNum,
+                                        workOrderNum: data.workOrderNum,
+                                        weight: data.weight,
+                                        customer: data.customer,
+                                        coilNum: data.coilNum,
+                                        manufacturer: data.manufacturer,
+                                        width: data.width,
+                                        dateCapture: data.dateCapture,
                                       }) ;
                                     });
   });
@@ -51,6 +56,7 @@ export class QrscanPageComponent {
     let str = '';
     // let row = '';
     let column = '';
+
 
     // create Header
     // console.log(objArray);

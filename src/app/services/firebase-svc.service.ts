@@ -22,23 +22,34 @@ export class FirebaseSvcService {
     return this.dbCollection.snapshotChanges().map((actions) => {
       return actions.map((a) => {
         const data = a.payload.doc.data() as DaikinTag;
-        return { id: a.payload.doc.id,
-                 name: data.name,
-                 title: data.title,
-                 description: data.description,
-                 date: data.date };
+        return {
+                  id: data.id,
+                  partNum: data.partNum,
+                  workOrderNum: data.workOrderNum,
+                  weight: data.weight,
+                  customer: data.customer,
+                  coilNum: data.coilNum,
+                  manufacturer: data.manufacturer,
+                  width: data.width,
+                  dateCapture: data.dateCapture
+                };
       });
     });
   }
 
   addli() {
-    const tag = {
-      name: 'info.name',
-      title: 'info.title',
-      description: 'info.description',
-      date: new Date(),
-    };
-    this.dbCollection.add(tag);
+    // const tag = {
+    //   id: data.id,
+    //   partNum: data.partNum,
+    //   workOrderNum: data.workOrderNum,
+    //   weight: data.weight,
+    //   customer: data.customer,
+    //   coilNum: data.coilNum,
+    //   manufacturer: data.manufacturer,
+    //   width: data.width,
+    //   dateCapture: data.dateCapture
+    // };
+    // this.dbCollection.add(tag);
   }
 
   // Get the given document id, and retrieve all the collection
@@ -52,13 +63,18 @@ export class FirebaseSvcService {
   }
 
   create(info ) {
-    const tag = {
-      name: info.name,
-      title: info.title,
-      description: info.description,
-      date: new Date(),
-    };
-    return this.dbCollection.add(tag);
+    // const tag = {
+    //   id: data.id,
+    //   partNum: data.partNum,
+    //   workOrderNum: data.workOrderNum,
+    //   weight: data.weight,
+    //   customer: data.customer,
+    //   coilNum: data.coilNum,
+    //   manufacturer: data.manufacturer,
+    //   width: data.width,
+    //   dateCapture: data.dateCapture
+    // };
+    // return this.dbCollection.add(tag);
   }
 
   updateNote(id: string, data: Partial<DaikinTag>) {
