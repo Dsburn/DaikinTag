@@ -1,36 +1,89 @@
 <div class="container-fluid">
+
+    <form #d="ngForm" novalidate (ngSubmit)="create(d.value)">
+        <br>
+        <div class="form-group row">
+            <label for="partNo" class="col-md-4 col-form-label">PartNumber</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="partNo" ngModel name="partNo">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="workOrderNo" class="col-md-4 col-form-label">WorkOrder No</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="workOrderNo" ngModel name="workOrderNo">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="weight" class="col-md-4 col-form-label">Weight</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="weight" ngModel name="weight">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="customer" class="col-md-4 col-form-label">Customer</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="customer" ngModel name="customer">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="coilNum" class="col-md-4 col-form-label">CoilNum</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="coilNum" ngModel name="coilNum">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="manufacturer" class="col-md-4 col-form-label">Manufacturer</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="manufacturer" ngModel name="manufacturer">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="width" class="col-md-4 col-form-label">Width</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" id="width" ngModel name="width">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-lg-5 col-sm-10">
+                <button type="submit" class="btn btn-primary">Add
+              </button><span *ngIf="isSuccess">
+                  <strong>Success!</strong>
+            </span>
+            </div>
+        </div>
+
+    </form>
+    <br>
+    <br>
+
     <form #f="ngForm" novalidate (ngSubmit)="save(f.value)">
-        <!-- <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" name="name" [(ngModel)]="user.name" #name="ngModel" required minlength="5">
-            <small [hidden]="name.valid || (name.pristine && !f.submitted)" class="text-danger">
-            Name is required (minimum 5 characters).
-            </small>
-        </div> -->
-        <!-- <div class="form-group">
-            <label>Street</label>
-            <input type="text" class="form-control" name="street" [(ngModel)]="user.address.street" #street="ngModel" required>
-            <small [hidden]="street.valid || (street.pristine && !f.submitted)" class="text-danger">Street is required.
-            </small>
-        </div> -->
         <div class="form-group">
-            <input type="text" class="form-control" name="searchDOc" ngModel>
-            <button type="submit" class="btn btn-default">Retrieve</button>
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="searchDOc" ngModel placeholder="Search for...">
+                    <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Search!</button>
+              </span>
+                </div>
+            </div>
         </div>
     </form>
-    <!-- <div class="margin-20">
-        <div>Form details:-</div>
-        <pre>Is form valid?: <br>{{f.valid | json}}</pre>
-        <pre>Is form submitted?: <br>{{f.submitted | json}}</pre>
-        <pre>form value: <br>{{f.value | json}}</pre>
-    </div> -->
     <div>
-        <!-- <tree-root [nodes]="docTag | async"></tree-root> -->
-        <ul class="list-group" *ngFor="let tag of docTag | async">
-            <li class="list-group-item">{{tag | json}}</li>
-        </ul>
-        <button *ngIf="docTag | async" class="btn btn-success" (click)="GenerateCSV()">Download</button>
 
+        <div class="form-group row">
+            <!-- <tree-root [nodes]="docTag | async"></tree-root> -->
+            <ul class="list-group" *ngFor="let tag of docTag | async">
+                <li class="list-group-item">{{tag | json}}</li>
+            </ul>
+            <button *ngIf="docTag | async" class="btn btn-success" ngModel name="download" (click)="GenerateCSV()">Download</button>
+        </div>
         <!-- <button *ngIf="docTag | async" class="btn btn-success" (click)="GenerateCSV()">Download</button> -->
         <!-- <button class="btn btn-success" (click)="Onclick()">Generate</button> -->
     </div>

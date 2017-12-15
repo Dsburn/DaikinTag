@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DaikinTag } from '../../model/daikin-tag';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseSvcService } from '../../services/firebase-svc.service';
+import { error } from 'selenium-webdriver';
 
 
 
@@ -16,9 +17,23 @@ export class QrscanPageComponent {
   content: string;
   private Tag = [];
   Doc: any;
+  isSuccess = false;
 
   constructor(private fbService: FirebaseSvcService) { }
 
+  create(form) {
+    console.log(form);
+    this.fbService.create({
+      partNum: form.partNo,
+      workOrderNum: form.workOrderNo,
+      weight: form.weight,
+      customer: form.customer,
+      coilNum: form.coilNum,
+      manufacturer: form.manufacturer,
+      width: form.width
+    }
+    ).then(success =>  {this.isSuccess = true; }).catch(status => console.log(status));
+  }
   save(form) {
     this.docTag = this.fbService.getSnapshot(form.searchDOc);
     this.docTag.subscribe((val) => {
@@ -72,13 +87,13 @@ export class QrscanPageComponent {
 
     // print column
      // tslint:disable-next-line:forin
-     for (const index in array[0]) {
-        // Now convert each value to string and comma-separated
-        console.log(array[0][index].name);
-        column +=  `${array[0][index].name}` + ',';
-    }
-    // console.log(column);
-    str += column + '\r\n';
+    //  for (const index in array[0]) {
+    //     // Now convert each value to string and comma-separated
+    //     console.log(array[0][index].name);
+    //     // column +=  `${array[0][index].name}` + ',';
+    // }
+    // // console.log(column);
+    // str += column + '\r\n';
 
     for (let i = 0; i < array.length; i++) {
         let line = '';

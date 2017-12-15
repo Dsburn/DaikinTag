@@ -63,18 +63,17 @@ export class FirebaseSvcService {
   }
 
   create(info ) {
-    // const tag = {
-    //   id: data.id,
-    //   partNum: data.partNum,
-    //   workOrderNum: data.workOrderNum,
-    //   weight: data.weight,
-    //   customer: data.customer,
-    //   coilNum: data.coilNum,
-    //   manufacturer: data.manufacturer,
-    //   width: data.width,
-    //   dateCapture: data.dateCapture
-    // };
-    // return this.dbCollection.add(tag);
+    const tag = {
+      partNum: info.partNum,
+      workOrderNum: info.workOrderNum,
+      weight: info.weight,
+      customer: info.customer,
+      coilNum: info.coilNum,
+      manufacturer: info.manufacturer,
+      width: info.width,
+      dateCapture: new Date()
+    };
+    return this.afs.collection('Daikin').add(tag);
   }
 
   updateNote(id: string, data: Partial<DaikinTag>) {
