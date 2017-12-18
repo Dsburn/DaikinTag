@@ -24,6 +24,7 @@ export class QrscanPageComponent {
   create(form) {
     console.log(form);
     this.fbService.create({
+      name: form.savedName,
       partNum: form.partNo,
       workOrderNum: form.workOrderNo,
       weight: form.weight,

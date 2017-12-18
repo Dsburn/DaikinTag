@@ -37,6 +37,8 @@ export class FirebaseSvcService {
     });
   }
 
+
+
   addli() {
     // const tag = {
     //   id: data.id,
@@ -73,7 +75,7 @@ export class FirebaseSvcService {
       width: info.width,
       dateCapture: new Date()
     };
-    return this.afs.collection('Daikin').add(tag);
+    return this.afs.collection(info.name).add(tag);
   }
 
   updateNote(id: string, data: Partial<DaikinTag>) {
