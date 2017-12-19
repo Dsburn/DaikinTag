@@ -4,54 +4,78 @@ import { Observable } from 'rxjs/Observable';
 import { FirebaseSvcService } from '../../services/firebase-svc.service';
 import { error } from 'selenium-webdriver';
 
-
-
 @Component({
   selector: 'app-qrscan-page',
   templateUrl: './qrscan-page.component.html',
   styleUrls: ['./qrscan-page.component.css']
 })
-export class QrscanPageComponent {
-
+export class QrscanPageComponent implements OnInit {
   docTag: Observable<DaikinTag[]>;
   content: string;
-  private Tag = [];
+  public Tag = [];
   Doc: any;
   isSuccess = false;
+  isValid = true;
 
-  constructor(private fbService: FirebaseSvcService) { }
+  constructor(private fbService: FirebaseSvcService) {}
+
+
+  ngOnInit() {
+    this.fbService.change.subscribe(isOpen => {
+      if (!isOpen) {
+        this.docTag = null;
+      }
+      this.isValid = isOpen;
+    });
+  }
 
   create(form) {
     console.log(form);
-    this.fbService.create({
-      name: form.savedName,
-      partNum: form.partNo,
-      workOrderNum: form.workOrderNo,
-      weight: form.weight,
-      customer: form.customer,
-      coilNum: form.coilNum,
-      manufacturer: form.manufacturer,
-      width: form.width
-    }
-    ).then(success =>  {this.isSuccess = true; }).catch(status => console.log(status));
+    this.fbService
+      .create({
+        name: form.savedName,
+        partNum: form.partNo,
+        workOrderNum: form.workOrderNo,
+        weight: form.weight,
+        customer: form.customer,
+        coilNum: form.coilNum,
+        manufacturer: form.manufacturer,
+        width: form.width
+      })
+      .then(success => {
+        this.isSuccess = true;
+      })
+      .catch(status => console.log(status));
   }
   save(form) {
     this.docTag = this.fbService.getSnapshot(form.searchDOc);
-    this.docTag.subscribe((val) => {
-       val.map(data => {this.Tag.push({
-                                        id: data.id,
-                                        partNum: data.partNum,
-                                        workOrderNum: data.workOrderNum,
-                                        weight: data.weight,
-                                        customer: data.customer,
-                                        coilNum: data.coilNum,
-                                        manufacturer: data.manufacturer,
-                                        width: data.width,
-                                        dateCapture: data.dateCapture,
-                                      }) ;
-                                    });
-  });
-}
+    if (this.docTag !== null) {
+      this.docTag.subscribe(
+        val => {
+          if (val.length === 0) {
+            this.isValid = false;
+          } else {
+            val.map(data => {
+              this.Tag.push({
+                id: data.id,
+                partNum: data.partNum,
+                workOrderNum: data.workOrderNum,
+                weight: data.weight,
+                customer: data.customer,
+                coilNum: data.coilNum,
+                manufacturer: data.manufacturer,
+                width: data.width,
+                dateCapture: data.dateCapture
+              });
+            });
+          }
+        },
+        stateErr => {
+          console.log('Error: Doctag');
+        }, () => {this.docTag = null; }
+      );
+    }
+  }
 
   GenerateCSV() {
     console.log(JSON.stringify(this.Tag));
@@ -68,11 +92,11 @@ export class QrscanPageComponent {
 
   // convert Json to CSV data in Angular2
   ConvertToCSV(objArray) {
-    const array = typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
+    const array =
+      typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     // let row = '';
     let column = '';
-
 
     // create Header
     // console.log(objArray);
@@ -87,7 +111,7 @@ export class QrscanPageComponent {
     // str += row + '\r\n';
 
     // print column
-     // tslint:disable-next-line:forin
+    // tslint:disable-next-line:forin
     //  for (const index in array[0]) {
     //     // Now convert each value to string and comma-separated
     //     console.log(array[0][index].name);
@@ -97,20 +121,18 @@ export class QrscanPageComponent {
     // str += column + '\r\n';
 
     for (let i = 0; i < array.length; i++) {
-        let line = '';
-        // tslint:disable-next-line:forin
-        for (const index in array[i]) {
-            // tslint:disable-next-line:curly
-            // console.log(array[i]);
-            if (line !== '') {
-              line += ',';
-              }
-            line += array[i][index];
+      let line = '';
+      // tslint:disable-next-line:forin
+      for (const index in array[i]) {
+        // tslint:disable-next-line:curly
+        // console.log(array[i]);
+        if (line !== '') {
+          line += ',';
         }
-        str += line + '\r\n';
+        line += array[i][index];
+      }
+      str += line + '\r\n';
     }
     return str;
-}
-
-
+  }
 }

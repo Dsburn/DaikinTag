@@ -3,3 +3,13 @@
 .form-horizontal .control-label {
     padding-top: 7px;
 }
+
+.table td.fit,
+.table th.fit {
+    width: 1%;
+}
+
+.table-fit {
+    width: 1px;
+    white-space: nowrap;
+}

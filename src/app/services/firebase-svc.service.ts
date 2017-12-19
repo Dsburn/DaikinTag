@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 
@@ -12,15 +12,41 @@ export class FirebaseSvcService {
   dbCollection: AngularFirestoreCollection<DaikinTag>;
   dbDocument:   AngularFirestoreDocument<DaikinTag>;
 
+  isOpen = false;
+  @Output() change: EventEmitter<boolean> = new EventEmitter();
+
   constructor(private afs: AngularFirestore) {
 
   }
+
+  toggle() {
+    this.isOpen = !this.isOpen;
+    this.change.emit(this.isOpen);
+  }
+
+  checkSnapshoot(): any {
+    this.dbCollection.ref.get();
+  }
   getSnapshot(id: string): Observable<DaikinTag[]> {
     this.dbCollection = this.afs.collection(id);
-    console.log(id);
+    this.dbCollection.ref.get().then(querySnapshot => {
+      if (querySnapshot.size > 0) {
+        console.log(querySnapshot.docs[0].data());
+        this.change.emit(true);
+      } else {
+        this.change.emit(false);
+        console.log('No such document!');
+      }
+    })
+    .catch(function(error) {
+      console.log('Error getting document: ', error);
+    });
+
     // ['added', 'modified', 'removed']
+
     return this.dbCollection.snapshotChanges().map((actions) => {
-      return actions.map((a) => {
+      return actions.map ( (a) => {
+        if (!a.payload.doc.exists) { return null; }
         const data = a.payload.doc.data() as DaikinTag;
         return {
                   id: data.id,
@@ -35,6 +61,7 @@ export class FirebaseSvcService {
                 };
       });
     });
+
   }
 
 

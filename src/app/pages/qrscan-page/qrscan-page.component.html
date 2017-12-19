@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-auto">
+        <div class="col-auto" *ngIf="!(docTag | async)">
             <form #d="ngForm" novalidate (ngSubmit)="create(d.value)">
                 <div class="form-group row">
                     <label for="savedName" class="col-md-4 col-form-label">SavedName</label>
@@ -85,11 +85,52 @@
                 <br>
                 <div class="row">
                     <div class="col-md-6">
-                        <ul class="list-group" *ngFor="let tag of docTag | async">
+                        <!-- <ul class="list-group" *ngFor="let tag of docTag | async">
                             <li class="list-group-item">{{tag | json}}</li>
-                        </ul>
+                        </ul> -->
+                        <table class="table table-bordered table-fit">
+                            <caption *ngIf="docTag | async">
+                                <EM>-- Download into .csv format --</EM>
+                            </caption>
+                            <caption *ngIf="!isValid">
+                                <EM>-- No such Record!!! --</EM>
+                            </caption>
+                            <thead *ngIf="docTag | async">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Part Number</th>
+                                    <th>Work-Order Number</th>
+                                    <th>Weight</th>
+                                    <th>Customer</th>
+                                    <th>Coil Number</th>
+                                    <th>Manufacturer</th>
+                                    <th>Width</th>
+                                    <th>Date-Capture</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let tag of docTag | async; let i= index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{tag.partNum}}</td>
+                                    <td>{{tag.workOrderNum}}</td>
+                                    <td>{{tag.weight}}</td>
+                                    <td>{{tag.customer}}</td>
+                                    <td>{{tag.coilNum}}</td>
+                                    <td>{{tag.manufacturer}}</td>
+                                    <td>{{tag.width}}</td>
+                                    <td>{{tag.dateCapture}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr *ngIf="docTag|async">
+                                    <td valign="bottom" align="right">
+                                        <button class="btn btn-success" ngModel name="download" (click)="GenerateCSV()">Download</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                    <button *ngIf="docTag | async" class="btn btn-success" ngModel name="download" (click)="GenerateCSV()">Download</button>
+
                 </div>
             </form>
 
