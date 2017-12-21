@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseSvcService } from '../../services/firebase-svc.service';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import {DataTableModule} from 'angular2-datatable';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     RouterModule.forChild(QRScanRoutes),
     FormsModule,
     AngularFirestoreModule,
-    NgbCollapseModule
+    NgbCollapseModule,
+    DataTableModule
 
   ],
   declarations: [QrscanPageComponent],

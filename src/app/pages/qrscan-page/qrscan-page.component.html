@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <button type="button" #collapseButton class="btn btn-outline-primary d-inline-flex p-2 my-2" (click)="loadForm(!isCollapsed)" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample"> Show Form
-        </button>
+  </button>
     <div class="row">
         <div class="col-6" id="collapseExample" [ngbCollapse]="isCollapsed">
             <form #d="ngForm" novalidate (ngSubmit)="create(d.value)">
@@ -62,9 +62,10 @@
                 <div class="form-group row">
                     <div class="offset-lg-5 col-sm-10">
                         <button type="submit" class="btn btn-primary">Add
-                  </button><span *ngIf="isSuccess">
-                      <strong>Success!</strong>
-                </span>
+            </button>
+                        <span *ngIf="isSuccess">
+              <strong>Success!</strong>
+            </span>
                     </div>
                 </div>
             </form>
@@ -72,17 +73,20 @@
         <div class="col-12">
             <form #f="ngForm" novalidate (ngSubmit)="save(f.value)">
                 <div class="row">
-                    <div class="col-md-auto">
+                    <div class="col">
                         <div class="form-group row d-inline-flex p-2">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="searchDOc" ngModel placeholder="Enter ID Number...">
                                 <span class="input-group-btn">
-                              <button class="btn btn-secondary d-inline-flex pad2x" type="submit" >Search!
-                              </button>
-                            </span>
+                                  <button class="btn btn-secondary d-inline-flex pad2x mx-0" type="submit">Search!
+                                  </button>
+                                </span>
+                                <span *ngIf="docTag | async" class="input-group-btn mx-5"><button class="btn btn-success" ngModel name="download" (click)="GenerateCSV()">Download *.csv</button></span>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <br>
                 <div class="row">
@@ -91,29 +95,47 @@
                             <li class="list-group-item">{{tag | json}}</li>
                         </ul> -->
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <caption *ngIf="docTag | async">
+                            <table class="table table-bordered table-hover" [mfData]="docTag | async" #mf="mfDataTable" [mfRowsOnPage]="5">
+                                <!-- <caption *ngIf="docTag | async">
                                     <EM>-- Download into .csv format --</EM>
-                                </caption>
+                                </caption> -->
                                 <caption *ngIf="!isValid">
-                                    <EM>-- No such Record!!! --</EM>
+                                    <EM>-- No Such Record Found!!! --</EM>
                                 </caption>
                                 <thead *ngIf="docTag | async">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Part Number</th>
-                                        <th>Work-Order Number</th>
-                                        <th>Weight</th>
-                                        <th>Customer</th>
-                                        <th>Coil Number</th>
-                                        <th>Manufacturer</th>
-                                        <th>Width</th>
-                                        <th>Date-Capture</th>
+                                        <th>
+                                            <mfDefaultSorter by="#">#</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="partNum">Part Number</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="workOrderNum">Work-Order Number</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="weight">Weight</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="customer">Customer</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="coilNum">Coil Number</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="manufacturer">Manufacturer</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="width">Width</mfDefaultSorter>
+                                        </th>
+                                        <th>
+                                            <mfDefaultSorter by="dateCapture">Date-Captured</mfDefaultSorter>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let tag of docTag | async; let i= index">
-                                        <th scope="row">{{i+1}}</th>
+                                    <tr *ngFor="let tag of mf.data; let i= index">
+                                        <th scope="row">{{(i+1)+( (mf.activePage-1)* mf.rowsOnPage)}}</th>
                                         <td>{{tag.partNum}}</td>
                                         <td>{{tag.workOrderNum}}</td>
                                         <td>{{tag.weight}}</td>
@@ -124,12 +146,17 @@
                                         <td>{{tag.dateCapture}}</td>
                                     </tr>
                                 </tbody>
-                                <tfoot>
-                                    <tr *ngIf="docTag|async">
+                                <tfoot *ngIf="docTag | async">
+                                    <tr>
+                                        <td colspan="9">
+                                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
                                         <td colspan="9" class="text-center" valign="bottom" align="right">
                                             <button class="btn btn-success" ngModel name="download" (click)="GenerateCSV()">Download *.csv</button>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tfoot>
                             </table>
                         </div>

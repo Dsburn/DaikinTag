@@ -352,9 +352,11 @@ angular-tree-component@^6.0.0:
     mobx ">=3"
     mobx-angular ">=1"
 
-angular2-json2csv@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/angular2-json2csv/-/angular2-json2csv-1.1.2.tgz#113456ca76c4c9988b538e230141c2c13e03c692"
+angular2-datatable@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/angular2-datatable/-/angular2-datatable-0.6.0.tgz#ca008f74087f0cb87da5709ed2f2d1d061772632"
+  dependencies:
+    lodash "^4.0.0"
 
 angularfire2@^5.0.0-rc.4:
   version "5.0.0-rc.4"
