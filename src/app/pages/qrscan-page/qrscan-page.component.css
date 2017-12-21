@@ -1,6 +1,7 @@
 /* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
 
-.form-horizontal .control-label {
+
+/* .form-horizontal .control-label {
     padding-top: 7px;
 }
 
@@ -9,7 +10,22 @@
     width: 1%;
 }
 
-.table-fit {
+.table .table-fit {
     width: 1px;
-    white-space: nowrap;
+    white-space: normal;
+    max-width: none;
+    overflow: scroll;
+}
+
+#tablecustom {
+    width: 1px;
+    background-color: beige;
+    max-width: none;
+    overflow: hidden;
+} */
+
+@media screen and (max-width: 1140px) {
+    table caption {
+        border-bottom: 1px solid #ddd;
+    }
 }

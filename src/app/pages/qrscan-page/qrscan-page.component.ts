@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { DaikinTag } from '../../model/daikin-tag';
-import { Observable } from 'rxjs/Observable';
-import { FirebaseSvcService } from '../../services/firebase-svc.service';
-import { error } from 'selenium-webdriver';
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { DaikinTag } from "../../model/daikin-tag";
+import { Observable } from "rxjs/Observable";
+import { FirebaseSvcService } from "../../services/firebase-svc.service";
+import { error } from "selenium-webdriver";
+import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-qrscan-page',
-  templateUrl: './qrscan-page.component.html',
-  styleUrls: ['./qrscan-page.component.css']
+  selector: "app-qrscan-page",
+  templateUrl: "./qrscan-page.component.html",
+  styleUrls: ["./qrscan-page.component.css"]
 })
 export class QrscanPageComponent implements OnInit {
   docTag: Observable<DaikinTag[]>;
@@ -16,9 +17,20 @@ export class QrscanPageComponent implements OnInit {
   Doc: any;
   isSuccess = false;
   isValid = true;
+  public isCollapsed = true;
+
+  @ViewChild('collapseButton') dataContainer: ElementRef;
+
+  loadForm(isCollapsed) {
+    if (isCollapsed) {
+      this.dataContainer.nativeElement.innerHTML = 'Show Form';
+    }else {
+      this.dataContainer.nativeElement.innerHTML = 'Hide Form';
+    }
+    this.isCollapsed = isCollapsed;
+  }
 
   constructor(private fbService: FirebaseSvcService) {}
-
 
   ngOnInit() {
     this.fbService.change.subscribe(isOpen => {
@@ -72,7 +84,10 @@ export class QrscanPageComponent implements OnInit {
         },
         stateErr => {
           console.log('Error: Doctag');
-        }, () => {this.docTag = null; }
+        },
+        () => {
+          this.docTag = null;
+        }
       );
     }
   }
@@ -96,30 +111,6 @@ export class QrscanPageComponent implements OnInit {
       typeof objArray !== 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     // let row = '';
-    let column = '';
-
-    // create Header
-    // console.log(objArray);
-    // // tslint:disable-next-line:forin
-    // for (const index in objArray) {
-    //     // Now convert each value to string and comma-separated
-    //     row += index + ',';
-    // }
-    // console.log(`Before Slice ${row}`);
-    // row = row.slice(0, -1);
-    // // append Label row with line break
-    // str += row + '\r\n';
-
-    // print column
-    // tslint:disable-next-line:forin
-    //  for (const index in array[0]) {
-    //     // Now convert each value to string and comma-separated
-    //     console.log(array[0][index].name);
-    //     // column +=  `${array[0][index].name}` + ',';
-    // }
-    // // console.log(column);
-    // str += column + '\r\n';
-
     for (let i = 0; i < array.length; i++) {
       let line = '';
       // tslint:disable-next-line:forin

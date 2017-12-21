@@ -6,13 +6,15 @@ import { QrscanPageComponent } from './qrscan-page.component';
 import { FormsModule } from '@angular/forms';
 import { FirebaseSvcService } from '../../services/firebase-svc.service';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(QRScanRoutes),
     FormsModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgbCollapseModule
 
   ],
   declarations: [QrscanPageComponent],

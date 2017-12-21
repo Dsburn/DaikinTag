@@ -24,11 +24,7 @@ export class FirebaseSvcService {
     this.change.emit(this.isOpen);
   }
 
-  checkSnapshoot(): any {
-    this.dbCollection.ref.get();
-  }
-  getSnapshot(id: string): Observable<DaikinTag[]> {
-    this.dbCollection = this.afs.collection(id);
+  checkSnapshoot() {
     this.dbCollection.ref.get().then(querySnapshot => {
       if (querySnapshot.size > 0) {
         console.log(querySnapshot.docs[0].data());
@@ -41,9 +37,11 @@ export class FirebaseSvcService {
     .catch(function(error) {
       console.log('Error getting document: ', error);
     });
-
+  }
+  getSnapshot(id: string): Observable<DaikinTag[]> {
+    this.dbCollection = this.afs.collection(id);
+    this.checkSnapshoot();
     // ['added', 'modified', 'removed']
-
     return this.dbCollection.snapshotChanges().map((actions) => {
       return actions.map ( (a) => {
         if (!a.payload.doc.exists) { return null; }
