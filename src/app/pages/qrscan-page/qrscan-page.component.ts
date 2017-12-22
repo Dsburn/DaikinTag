@@ -1,14 +1,14 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { DaikinTag } from "../../model/daikin-tag";
-import { Observable } from "rxjs/Observable";
-import { FirebaseSvcService } from "../../services/firebase-svc.service";
-import { error } from "selenium-webdriver";
-import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { DaikinTag } from '../../model/daikin-tag';
+import { Observable } from 'rxjs/Observable';
+import { FirebaseSvcService } from '../../services/firebase-svc.service';
+import { error } from 'selenium-webdriver';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: "app-qrscan-page",
-  templateUrl: "./qrscan-page.component.html",
-  styleUrls: ["./qrscan-page.component.css"]
+  selector: 'app-qrscan-page',
+  templateUrl: './qrscan-page.component.html',
+  styleUrls: ['./qrscan-page.component.css']
 })
 export class QrscanPageComponent implements OnInit {
   docTag: Observable<DaikinTag[]>;
